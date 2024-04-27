@@ -1,0 +1,185 @@
+[
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "load_dotenv",
+        "importPath": "dotenv",
+        "description": "dotenv",
+        "isExtraImport": true,
+        "detail": "dotenv",
+        "documentation": {}
+    },
+    {
+        "label": "Bot",
+        "importPath": "telegram",
+        "description": "telegram",
+        "isExtraImport": true,
+        "detail": "telegram",
+        "documentation": {}
+    },
+    {
+        "label": "Update",
+        "importPath": "telegram",
+        "description": "telegram",
+        "isExtraImport": true,
+        "detail": "telegram",
+        "documentation": {}
+    },
+    {
+        "label": "Updater",
+        "importPath": "telegram.ext",
+        "description": "telegram.ext",
+        "isExtraImport": true,
+        "detail": "telegram.ext",
+        "documentation": {}
+    },
+    {
+        "label": "CommandHandler",
+        "importPath": "telegram.ext",
+        "description": "telegram.ext",
+        "isExtraImport": true,
+        "detail": "telegram.ext",
+        "documentation": {}
+    },
+    {
+        "label": "CallbackContext",
+        "importPath": "telegram.ext",
+        "description": "telegram.ext",
+        "isExtraImport": true,
+        "detail": "telegram.ext",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "start",
+        "kind": 2,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "def start(update: Update, context: CallbackContext):\n    update.message.reply_text(\n        'Привет!'\n        'Отправь мне /set <symbol> <min_price> <max_price>'\n        'чтобы установить алерт.'\n        )\ndef set_alert(update: Update, context: CallbackContext):\n    chat_id = update.message.chat_id\n    try:\n        symbol = context.args[0].upper()",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "set_alert",
+        "kind": 2,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "def set_alert(update: Update, context: CallbackContext):\n    chat_id = update.message.chat_id\n    try:\n        symbol = context.args[0].upper()\n        min_price = float(context.args[1])\n        max_price = float(context.args[2])\n        crypto_settings[chat_id] = (symbol, min_price, max_price)\n        update.message.reply_text(\n            f\"\"\"\n            Алерт установлен для {symbol} при цене",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "get_crypto_price",
+        "kind": 2,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "def get_crypto_price(symbol, api_key):\n    url = \"https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest\"\n    parameters = {'symbol': symbol, 'convert': 'USD'}\n    headers = {'Accepts': 'application/json', 'X-CMC_PRO_API_KEY': api_key}\n    response = requests.get(url, headers=headers, params=parameters)\n    data = response.json()\n    price = data['data'][symbol]['quote']['USD']['price']\n    return price\ndef monitor_prices(context: CallbackContext):\n    api_key = COINMARKET_TOKEN",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "monitor_prices",
+        "kind": 2,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "def monitor_prices(context: CallbackContext):\n    api_key = COINMARKET_TOKEN\n    for chat_id, settings in crypto_settings.items():\n        symbol, min_price, max_price = settings\n        current_price = get_crypto_price(symbol, api_key)\n        if current_price <= min_price or current_price >= max_price:\n            bot.send_message(\n                chat_id=chat_id,\n                text=f'Цена {symbol} достигла ${current_price}!'\n                )",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "TELEGRAM_TOKEN",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')\nCOINMARKET_TOKEN = os.getenv('COINMARKET_TOKEN')\nbot = Bot(token=TELEGRAM_TOKEN)\nupdater = Updater(bot=bot)\ndispatcher = updater.dispatcher\ncrypto_settings = {}\ndef start(update: Update, context: CallbackContext):\n    update.message.reply_text(\n        'Привет!'\n        'Отправь мне /set <symbol> <min_price> <max_price>'",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "COINMARKET_TOKEN",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "COINMARKET_TOKEN = os.getenv('COINMARKET_TOKEN')\nbot = Bot(token=TELEGRAM_TOKEN)\nupdater = Updater(bot=bot)\ndispatcher = updater.dispatcher\ncrypto_settings = {}\ndef start(update: Update, context: CallbackContext):\n    update.message.reply_text(\n        'Привет!'\n        'Отправь мне /set <symbol> <min_price> <max_price>'\n        'чтобы установить алерт.'",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "bot",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "bot = Bot(token=TELEGRAM_TOKEN)\nupdater = Updater(bot=bot)\ndispatcher = updater.dispatcher\ncrypto_settings = {}\ndef start(update: Update, context: CallbackContext):\n    update.message.reply_text(\n        'Привет!'\n        'Отправь мне /set <symbol> <min_price> <max_price>'\n        'чтобы установить алерт.'\n        )",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "updater",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "updater = Updater(bot=bot)\ndispatcher = updater.dispatcher\ncrypto_settings = {}\ndef start(update: Update, context: CallbackContext):\n    update.message.reply_text(\n        'Привет!'\n        'Отправь мне /set <symbol> <min_price> <max_price>'\n        'чтобы установить алерт.'\n        )\ndef set_alert(update: Update, context: CallbackContext):",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "dispatcher",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "dispatcher = updater.dispatcher\ncrypto_settings = {}\ndef start(update: Update, context: CallbackContext):\n    update.message.reply_text(\n        'Привет!'\n        'Отправь мне /set <symbol> <min_price> <max_price>'\n        'чтобы установить алерт.'\n        )\ndef set_alert(update: Update, context: CallbackContext):\n    chat_id = update.message.chat_id",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "crypto_settings",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "crypto_settings = {}\ndef start(update: Update, context: CallbackContext):\n    update.message.reply_text(\n        'Привет!'\n        'Отправь мне /set <symbol> <min_price> <max_price>'\n        'чтобы установить алерт.'\n        )\ndef set_alert(update: Update, context: CallbackContext):\n    chat_id = update.message.chat_id\n    try:",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "start_handler",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "start_handler = CommandHandler('start', start)\nset_alert_handler = CommandHandler('set', set_alert)\ndispatcher.add_handler(start_handler)\ndispatcher.add_handler(set_alert_handler)\njob_queue = updater.job_queue\njob_queue.run_repeating(monitor_prices, interval=300, first=0)\nupdater.start_polling()\nupdater.idle()",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "set_alert_handler",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "set_alert_handler = CommandHandler('set', set_alert)\ndispatcher.add_handler(start_handler)\ndispatcher.add_handler(set_alert_handler)\njob_queue = updater.job_queue\njob_queue.run_repeating(monitor_prices, interval=300, first=0)\nupdater.start_polling()\nupdater.idle()",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    },
+    {
+        "label": "job_queue",
+        "kind": 5,
+        "importPath": "crypto_testcase",
+        "description": "crypto_testcase",
+        "peekOfCode": "job_queue = updater.job_queue\njob_queue.run_repeating(monitor_prices, interval=300, first=0)\nupdater.start_polling()\nupdater.idle()",
+        "detail": "crypto_testcase",
+        "documentation": {}
+    }
+]
